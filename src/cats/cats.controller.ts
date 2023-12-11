@@ -25,9 +25,13 @@ import { HttpExceptionFilter } from '../common/exceptionFilter/http-exception.fi
 export class CatsController {
   @Get('')
   @ApiOperation({ summary: '查询所有猫' })
-  findAll(@Req() request: Request): string {
+  findAll(@Req() request: Request) {
     // console.log(request.ip);
-    return `This action returns all cats ${request.ip}`;
+    return {
+      code: 200,
+      data: `This action returns all cats ${request.ip}`,
+      msg: 'ok',
+    };
   }
 
   @Post()

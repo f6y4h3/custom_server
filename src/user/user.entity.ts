@@ -14,6 +14,6 @@ export class User {
   @Column()
   account: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
 }

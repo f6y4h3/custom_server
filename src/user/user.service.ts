@@ -9,16 +9,16 @@ export class UserService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
   ) {}
-  async creat(user: User): Promise<void> {
-    await this.usersRepository.create(user);
+  async creat(user: User):Promise<void> {
+    await this.usersRepository.save(user);
   }
 
   findAll(): Promise<User[]> {
     return this.usersRepository.find();
   }
 
-  findOne(id: number): Promise<User | null> {
-    return this.usersRepository.findOneBy({ id });
+  findOne(account: string): Promise<User | null> {
+    return this.usersRepository.findOneBy({ account });
   }
 
   async remove(id: number): Promise<void> {
