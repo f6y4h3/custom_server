@@ -17,8 +17,8 @@ export class UserService {
     return this.usersRepository.find();
   }
 
-  findOne(account: string): Promise<User | null> {
-    return this.usersRepository.findOneBy({ account });
+  async findOne(account: string): Promise<User | null> {
+    return await this.usersRepository.findOneBy({ account });
   }
 
   async remove(id: number): Promise<void> {

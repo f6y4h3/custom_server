@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, HttpCode } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './user.entity';
+import { NoAuth } from 'src/common/decorators/public.decorators';
 
 @Controller('user')
 export class UserController {
@@ -9,6 +10,7 @@ export class UserController {
   findUser() {
     return this.userService.findAll();
   }
+  @NoAuth()
   @Post('register')
   @HttpCode(200)
   async registerUser(@Body() user: User) {
@@ -18,6 +20,7 @@ export class UserController {
         code: 400,
         data: {
           isRegister: false,
+          userData
         },
         msg: '该账号已注册',
       };

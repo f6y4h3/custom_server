@@ -6,8 +6,9 @@ import {
   Param,
   Body,
   UseFilters,
+  Query,
 } from '@nestjs/common';
-import { Request } from 'express';
+// import { Request } from 'express';
 import { CreateCatDto } from './dto/create-cat.dto';
 import {
   ApiTags,
@@ -16,6 +17,10 @@ import {
   // ApiBody,
 } from '@nestjs/swagger';
 import { HttpExceptionFilter } from '../common/exceptionFilter/http-exception.filter';
+// import { NoAuth } from '../common/decorators/public.decorators';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { UserService } from 'src/user/user.service';
 
 @ApiTags('猫接口')
 // @ApiCreatedResponse({
@@ -23,14 +28,21 @@ import { HttpExceptionFilter } from '../common/exceptionFilter/http-exception.fi
 // })
 @Controller('cats')
 export class CatsController {
+  constructor(private userService:UserService){}
   @Get('')
+  // @NoAuth()
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: '查询所有猫' })
-  findAll(@Req() request: Request) {
+  async findAll(@Req() request: any, @Query() query: any) {
     // console.log(request.ip);
+    console.log(query, 'query');
+    const data = {
+      userName:(await this.userService.findOne(request.account)).name
+    }
     return {
       code: 200,
-      data: `This action returns all cats ${request.ip}`,
-      msg: 'ok',
+      data,
+      msg: query.msg,
     };
   }
 

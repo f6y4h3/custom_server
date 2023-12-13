@@ -1,5 +1,6 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../../user/user.entity';
+import { Auth } from 'src/auth/auth.entity';
 
 export default {
   connect: TypeOrmModule.forRoot({
@@ -10,7 +11,7 @@ export default {
     password: '5214fyh',
     database: 'custom',
     // 要为此连接加载的实体。接受需要加载From实体的实体类和目录。目录支持全局模式。
-    entities: [User],
+    entities: [User,Auth],
     synchronize: true,
   }),
 };
