@@ -11,17 +11,29 @@ import { AuthModule } from './auth/auth.module';
 import connect from './common/database/connect';
 import { AuthGuard } from './auth/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
-
+import { PublicModule } from './public/public.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
-  imports: [CatsModule, connect.connect, UserModule, AuthModule],
-  providers:[
+  imports: [
+    CatsModule,
+    connect.connect,
+    UserModule,
+    AuthModule,
+    PublicModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'static/uploaded'),
+      serveRoot: '/static',
+    }),
+  ],
+  providers: [
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
     },
-  ]
-})  
+  ],
+})
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
