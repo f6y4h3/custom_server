@@ -18,3 +18,4 @@ export class HttpExceptionFilter implements ExceptionFilter {
       });
   }
 }
+// forbidden.exception.ts

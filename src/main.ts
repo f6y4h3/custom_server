@@ -1,34 +1,18 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-
-// import os  from 'os';
-// import dns from 'dns';
-
-// function getServerIp() {
-//   const networkInterfaces = os.networkInterfaces();
-//   for (const key in networkInterfaces) {
-//     const addresses = networkInterfaces[key];
-//     for (const addressInfo of addresses) {
-//       if (!addressInfo.internal && addressInfo.family === 'IPv4') {
-//         return addressInfo.address;
-//       }
-//     }
-//   }
-// }
-
-// console.log(os);
-
-// const serverIp = getServerIp();
-// console.log("当前服务器的 IP 地址是：", serverIp);
+import { WsAdapter } from '@nestjs/platform-ws';
+// import { HttpExceptionFilter } from './common/exceptionFilter/http-exception.filter'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.useWebSocketAdapter(new WsAdapter(app))
   // const app = await NestFactory.create(AppModule,{ cors: true });
   // app.use
   // app.useStaticAssets('uploads', {
   //   prefix: '/api/uploads/'
   // });
+  // app.useGlobalFilters(new HttpExceptionFilter())
   const config = new DocumentBuilder()
     .setTitle('Cats example')
     .setDescription('The cats API description')

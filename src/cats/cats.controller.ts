@@ -35,7 +35,7 @@ export class CatsController {
   @ApiOperation({ summary: '查询所有猫' })
   async findAll(@Req() request: any, @Query() query: any) {
     // console.log(request.ip);
-    console.log(query, 'query');
+    // console.log(query, 'query');
     const data = {
       userName:(await this.userService.findOne(request.account)).name
     }

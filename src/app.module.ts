@@ -14,6 +14,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { PublicModule } from './public/public.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { EventsModule } from './event/event.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { join } from 'path';
       rootPath: join(__dirname, '..', 'static/uploaded'),
       serveRoot: '/static',
     }),
+    EventsModule,
   ],
   providers: [
     {
