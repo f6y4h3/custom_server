@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { WsAdapter } from '@nestjs/platform-ws';
+
 // import { HttpExceptionFilter } from './common/exceptionFilter/http-exception.filter'
 
 async function bootstrap() {
