@@ -1,0 +1,23 @@
+{
+  "apps": [
+    {
+      "name": "nest_server", 
+      "script": "./src/main.ts", 
+      "env_dev": {
+        "NODE_ENV": "development"
+      },
+      "env_pro": {
+        "NODE_ENV": "prod"
+      },
+      "instances": 1, 
+      "exec_mode": "fork",
+      "max_restarts" : 3, 
+      "restart_delay" : 5000, 
+      "log_date_format" : "YYYY-MM-DD HH:mm Z",
+      "combine_logs" : true,
+      "log_file": "/log/outerr.log", 
+      "out_file": "/log/out.log",
+      "error_file": "/log/err.log"
+    }
+  ]
+}
