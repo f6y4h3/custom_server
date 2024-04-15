@@ -6,7 +6,7 @@ import { WsAdapter } from '@nestjs/platform-ws';
 // import { HttpExceptionFilter } from './common/exceptionFilter/http-exception.filter'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule,{ cors: true });
   app.useWebSocketAdapter(new WsAdapter(app))
   // const app = await NestFactory.create(AppModule,{ cors: true });
   // app.use
@@ -14,11 +14,11 @@ async function bootstrap() {
   //   prefix: '/api/uploads/'
   // });
   // app.useGlobalFilters(new HttpExceptionFilter())
+  app.setGlobalPrefix("api");
   const config = new DocumentBuilder()
     .setTitle('Cats example')
     .setDescription('The cats API description')
     .setVersion('1.0')
-    // .addTag('cats')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
