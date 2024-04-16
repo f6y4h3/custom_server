@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'nestjs',
-      script: './src/main.ts',
+      script: 'dist/main.js',
       instances: 1,  // 根据需求设置实例数量
       exec_mode: 'fork',
       autorestart: true,
