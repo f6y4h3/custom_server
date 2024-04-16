@@ -1,10 +1,10 @@
 module.exports = {
   apps: [
     {
-      name: 'nestjs-app',
-      script: 'dist/main.js',
+      name: 'nestjs',
+      script: './src/main.ts',
       instances: 1,  // 根据需求设置实例数量
-      exec_mode: 'cluster',
+      exec_mode: 'fork',
       autorestart: true,
       watch: false,
       max_memory_restart: '1G',
