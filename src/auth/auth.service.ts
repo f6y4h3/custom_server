@@ -64,7 +64,7 @@ export class AuthService {
     } catch {
       // throw new UnauthorizedException('登录失效，请重新登录')
       return {
-        code: 4001,
+        code: 401,
         data: {},
         msg: '登录已过期，请重新登录',
       };

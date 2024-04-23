@@ -11,19 +11,7 @@ import config from '../common/config';
 @Controller('public')
 export class PublicController {
   constructor(private readonly publicService: PublicService) {}
-  @Post('upload') // @UseInterceptors(
-  //   FileInterceptor('file', {
-  //     storage: diskStorage({
-  //       destination: './public/uploaded',
-  //       filename: (_, file, callback) => {
-  //         const fileName = `${
-  //           new Date().getTime() + extname(file.originalname)
-  //         }`;
-  //         return callback(null, fileName);
-  //       },
-  //     }),
-  //   }),
-  // )
+  @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   upload(@UploadedFile() file: Express.Multer.File) {
     const fileResult = {
