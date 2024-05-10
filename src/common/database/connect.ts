@@ -1,8 +1,7 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../../user/user.entity';
+// import { User } from '../../user/user.entity';
 import config from '../config';
-console.log(config,'configconfigconfig');
-
+console.log(config.env);
 export default {
   connect: TypeOrmModule.forRoot({
     type: 'mysql',
@@ -12,7 +11,7 @@ export default {
     password: config.password,
     database: 'custom',
     // 要为此连接加载的实体。接受需要加载From实体的实体类和目录。目录支持全局模式。
-    entities: [User],
+    entities: ['dist/**/*.entity{.ts,.js}'],
     synchronize: true,
   }),
 };

@@ -1,7 +1,8 @@
 export type message = {
+  from?: number;
   to: number;
   message: string;
-  messageType: messageType;
+  messageType?: messageType;
 };
 
 enum messageType {

@@ -37,7 +37,7 @@ export class CatsController {
     // console.log(request.ip);
     // console.log(query, 'query');
     const data = {
-      userName:(await this.userService.findOne(request.account)).name
+      userName:(await this.userService.findOneByAccount(request.account)).name
     }
     return {
       code: 200,

@@ -11,7 +11,7 @@ export class Auth {
   @Column()
   sex: number;
 
-  @Column()
+  @Column({ unique: true })
   account: string;
 
   @Column({ select: false })

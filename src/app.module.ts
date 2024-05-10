@@ -15,6 +15,7 @@ import { PublicModule } from './public/public.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { EventsModule } from './event/event.module';
+import { FriendModule } from './friend/friend.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { EventsModule } from './event/event.module';
       serveRoot: '/static',
     }),
     EventsModule,
+    FriendModule,
   ],
   providers: [
     {

@@ -11,7 +11,7 @@ export class User {
   @Column()
   sex: number;
 
-  @Column()
+  @Column({ unique: true , nullable: false })
   account: string;
 
   @Column({ readonly: true })

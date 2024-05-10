@@ -10,8 +10,8 @@ export class AuthService {
   ) {}
 
   // 登录
-  async signIn(account: string, pass: string) {
-    const user = await this.usersService.findOne(account);
+  async signIn(account: string = '', pass: string = '') {
+    const user = await this.usersService.findOneByAccount(account);
     if (user && user.password !== pass) {
       throw new UnauthorizedException('账号或密码不正确，请重试');
     }
@@ -21,7 +21,7 @@ export class AuthService {
       account: user.account,
     };
     const access_token = await this.jwtService.signAsync(payload, {
-      expiresIn: '30s',
+      expiresIn: '3600s',
     });
     const refresh_token = await this.jwtService.signAsync(payload, {
       expiresIn: '7d',
@@ -41,14 +41,14 @@ export class AuthService {
   async refreshToken(refreshToken: string) {
     try {
       const data = this.jwtService.verify(refreshToken);
-      const userData = await this.usersService.findOne(data.account);
+      const userData = await this.usersService.findOneByAccount(data.account);
       const payload = {
         userName: userData.name,
         userId: userData.id,
         account: userData.account,
       };
       const access_token = await this.jwtService.signAsync(payload, {
-        expiresIn: '30s',
+        expiresIn: '3600s',
       });
       const refresh_token = await this.jwtService.signAsync(payload, {
         expiresIn: '7d',

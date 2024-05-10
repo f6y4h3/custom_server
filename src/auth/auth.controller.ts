@@ -23,6 +23,8 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   signIn(@Body() signInDto: Record<string, any>) {
+    console.log(signInDto);
+    
     return this.authService.signIn(signInDto.account, signInDto.password);
   }
 
@@ -36,6 +38,10 @@ export class AuthController {
   @UseGuards(AuthGuard)
   @Get('profile')
   getProfile(@Request() req) {
-    return req.user;
+    return {
+      code: 200,
+      data: req.user,
+      msg: '',
+    };
   }
 }

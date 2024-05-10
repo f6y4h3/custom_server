@@ -1,4 +1,5 @@
 {
   "password":"5214fyh",
-  "path":"http://localhost:16000"
+  "path":"http://localhost:16000",
+  "env":"development"
 }
