@@ -32,14 +32,18 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   async onMessage(client: Server, data: message) {
     const token = client['_protocol'];
     const userId = await this.getUserByToken(token);
+    if (userId == -1) {
+      this.tokenFailure(client, data);
+      return;
+    }
     if (!ConnectMap.has(data.to)) {
-      if(MsgQueue.has(data.to)) {
+      if (MsgQueue.has(data.to)) {
         MsgQueue.get(data.to).push({
           from: userId,
           to: data.to,
           message: data.message,
         });
-      }else{
+      } else {
         MsgQueue.set(data.to, [
           {
             from: userId,
@@ -56,31 +60,36 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
         data: {
           from: userId,
           to: data.to,
-          content: data.message,
+          message: data.message,
         },
       }),
     );
   }
   async handleConnection(client: any) {
     const token = client['_protocol'];
-    try {
-      const userId = await this.getUserByToken(token);
-      console.log(userId, '连接成功');     
-      ConnectMap.set(userId, client);
-      if (MsgQueue.has(userId)) {
-        const msgList = this.getMsgList(userId);
-        console.log('有缓存消息', msgList);
-        for (const msg of msgList) {
-          client.send(JSON.stringify({ event: 'message', data: msg }));
-        }
-      }
-    } catch (e) {
-      client.send(JSON.stringify({ event: 'loginout', data: token }));
+    const userId = await this.getUserByToken(token);
+    if (userId == -1) {
+      this.tokenFailure(client);
+      return;
     }
+    console.log(userId, '连接成功');
+    ConnectMap.set(userId, client);
+    if (MsgQueue.has(userId)) {
+      const msgList = this.getMsgList(userId);
+      console.log('有缓存消息', msgList);
+      for (const msg of msgList) {
+        client.send(JSON.stringify({ event: 'message', data: msg }));
+      }
+    }
+    console.log(ConnectMap.size, '连接数');
   }
   async handleDisconnect(client: any) {
     const token = client['_protocol'];
     const userId = await this.getUserByToken(token);
+    if (userId == -1) {
+      this.tokenFailure(client);
+      return;
+    }
     if (ConnectMap.has(userId)) {
       ConnectMap.delete(userId);
     }
@@ -99,5 +108,8 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const msgs: Array<message> = MsgQueue.get(userId);
     MsgQueue.delete(userId);
     return msgs;
+  }
+  private tokenFailure(client: Server, data: any = {}) {
+    client.send(JSON.stringify({ event: 'tokenFailure', data }));
   }
 }
