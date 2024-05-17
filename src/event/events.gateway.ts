@@ -13,7 +13,7 @@ import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from '../auth/constants';
 import { ConnectMap, MsgQueue } from './map';
 import { message } from './type';
-@WebSocketGateway(8080)
+@WebSocketGateway(14600)
 export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   private server: Server;

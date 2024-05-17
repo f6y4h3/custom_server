@@ -20,10 +20,12 @@ export class FriendController {
   @Get('getFriends')
   @UseGuards(AuthGuard)
   async getFriends(@Request() req) {
-    const list = await this.friendService.findAll(req.userId);
+    const list = await this.friendService.findAll(req.user.userId);
     const resultList = [];
     for (const item of list) {
-      const data = await this.userService.findOneByUserId(item.friend_id);
+      const userId =
+        item.friend_id == req.user.userId ? item.user_id : item.friend_id;
+      const data = await this.userService.findOneByUserId(userId);
       delete data.password;
       resultList.push(data);
     }

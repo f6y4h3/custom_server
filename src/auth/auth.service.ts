@@ -21,7 +21,7 @@ export class AuthService {
       account: user.account,
     };
     const access_token = await this.jwtService.signAsync(payload, {
-      expiresIn: '60s',
+      expiresIn: '3600s',
     });
     const refresh_token = await this.jwtService.signAsync(payload, {
       expiresIn: '7d',
@@ -48,7 +48,7 @@ export class AuthService {
         account: userData.account,
       };
       const access_token = await this.jwtService.signAsync(payload, {
-        expiresIn: '60s',
+        expiresIn: '3600s',
       });
       const refresh_token = await this.jwtService.signAsync(payload, {
         expiresIn: '7d',

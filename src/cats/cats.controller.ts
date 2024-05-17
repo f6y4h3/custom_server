@@ -17,7 +17,7 @@ import {
   // ApiBody,
 } from '@nestjs/swagger';
 import { HttpExceptionFilter } from '../common/exceptionFilter/http-exception.filter';
-// import { NoAuth } from '../common/decorators/public.decorators';
+import { NoAuth } from '../common/decorators/public.decorators';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { UserService } from 'src/user/user.service';
@@ -29,13 +29,13 @@ import { UserService } from 'src/user/user.service';
 @Controller('cats')
 export class CatsController {
   constructor(private userService:UserService){}
-  @Get('')
-  // @NoAuth()
+  @Get('all')
+  @NoAuth()
   @UseGuards(AuthGuard)
   @ApiOperation({ summary: '查询所有猫' })
   async findAll(@Req() request: any, @Query() query: any) {
-    // console.log(request.ip);
-    // console.log(query, 'query');
+    console.log(request.account);
+    
     const data = {
       userName:(await this.userService.findOneByAccount(request.account)).name
     }
